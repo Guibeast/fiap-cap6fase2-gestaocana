@@ -1,107 +1,88 @@
-FIAP - Faculdade de Informática e Administração Paulista
+# FIAP - Faculdade de Informática e Administração Paulista
+
 <p align="center">
 <a href= "https://www.fiap.com.br/"><img src="assets/logo-fiap.png" alt="FIAP - Faculdade de Informática e Admnistração Paulista" border="0" width=40% height=40%></a>
 </p>
 
-AgroTech: Sistema de Gestão de Colheitas de Cana com Oracle DB
-Solo Group
-👨‍🎓 Integrantes:
-<a href="LINKEDIN">Guilherme da Nóbrega Gontijo - RM562211</a>
+<br>
 
-👩‍🏫 Professores:
-Tutor(a)
-<a href="LINKEDIN_DO_TUTOR">Ana Cristina dos Santos</a>
+# AgroTech: Sistema de Gestão de Colheitas de Cana com Oracle DB
 
-Coordenador(a)
-<a href="LINKEDIN_DO_COORDENADOR">André Godoi Chiovato</a>
+## Solo Group
 
-📜 Descrição
-Este projeto é um sistema de console (CLI) em Python para a gestão de registros de colheitas de cana-de-açúcar. A aplicação se conecta a um banco de dados Oracle para realizar operações de CRUD (Criar, Ler, Apagar), permitindo que o usuário interaja com os dados de forma estruturada.
 
-A principal funcionalidade do sistema é permitir o registro de novas colheitas e, a partir dos dados de produção e perdas, calcular o prejuízo financeiro correspondente. A aplicação utiliza a biblioteca Pandas para exibir os dados em um formato de tabela claro e organizado, além de calcular o prejuízo total acumulado. O projeto demonstra a integração entre Python e um banco de dados robusto para resolver um problema prático do agronegócio.
+## 👨‍🎓 Integrantes:
+- <a href="LINKEDIN">Guilherme da Nóbrega Gontijo - RM562211</a>
 
-📁 Estrutura de pastas
-A estrutura de pastas foi organizada para separar claramente o código-fonte, os dados e a documentação, seguindo o Template FIAP para projetos Python.
+## 👩‍🏫 Professores:
+### Tutor(a)
+- <a href="LINKEDIN_DO_TUTOR">Ana Cristina dos Santos</a>
+### Coordenador(a)
+- <a href="LINKEDIN_DO_COORDENADOR">André Godoi Chiovato</a>
 
-<b>assets</b>: Contém arquivos de mídia utilizados na documentação, como o logo da FIAP.
+## 📜 Descrição
 
-<b>src</b>: Contém o código-fonte desenvolvido para o projeto.
-    - <b>app.py</b>: Código principal em Python que contém toda a lógica do menu, as funções de CRUD e a conexão com o banco de dados Oracle.
+Este projeto, desenvolvido para a Atividade "Python e Além", consiste em um sistema de console (CLI) em Python para a gestão de registros de colheitas de cana-de-açúcar. A aplicação se conecta a um banco de dados Oracle para realizar operações de CRUD (Criar, Ler, Apagar), permitindo que o usuário interaja com os dados de forma estruturada.
 
-<b>README.md</b>: Arquivo de documentação principal do projeto (este arquivo).
+O objetivo é fornecer uma ferramenta para registrar dados de colheita e, a partir das perdas estimadas, calcular o prejuízo financeiro correspondente. A aplicação utiliza a biblioteca Pandas para exibir os dados de forma organizada e para realizar os cálculos. O projeto aborda conceitos de programação, manipulação de dados e integração com banco de dados para resolver um problema prático do agronegócio
 
-<b>requirements.txt</b>: Lista as bibliotecas Python necessárias para que o projeto funcione.
+## 📁 Estrutura de pastas
 
-🔧 Como executar o código
-Siga os passos abaixo para configurar o ambiente, o banco de dados e executar a aplicação.
+A estrutura de pastas foi organizada para separar claramente o código-fonte, a documentação visual e outros ativos do projeto, seguindo as boas práticas de desenvolvimento.
 
-Pré-requisitos
-Python: Python 3.8 ou versão superior.
+- <b>assets</b>: Contém arquivos de mídia utilizados na documentação, como o logo da FIAP.
+- <b>src</b>: Todo o código desenvolvido para o projeto.
+    - <b>main.py</b>: Código principal
+- <b>README.md</b>: Arquivo de documentação principal do projeto (este arquivo).
 
-Oracle Instant Client: A biblioteca oracledb requer o client do Oracle para se comunicar com o banco. Faça o download aqui e siga as instruções de instalação para o seu sistema operacional.
+## 🔧 Como executar o código
 
-Acesso a um Banco de Dados Oracle: Você precisará de um usuário, senha e DSN de um servidor Oracle.
+Siga os passos abaixo para compilar e executar o projeto em sua própria placa ESP32.
 
-Passo 1: Preparação do Banco de Dados
-Antes de rodar o script, você precisa criar a tabela que armazenará os dados. Conecte-se ao seu schema no Oracle e execute o seguinte comando SQL:
+### **Pré-requisitos**
+* **Python:** [Python 3.8](https://www.python.org/downloads/) ou versão superior.
+* **Oracle Instant Client:** A biblioteca `oracledb` requer o client do Oracle. Faça o download [aqui](https://www.oracle.com/database/technologies/instant-client/downloads.html) e siga as instruções de instalação.
+* **Banco de Dados Oracle:** Acesso a um schema Oracle e a tabela `COLHEITAS_CANA` criada.
 
-SQL
+### **Passo a Passo para Execução**
+1.  **Crie a Tabela no Banco de Dados:**
+      - Execute o seguinte script SQL no seu schema Oracle para criar a tabela necessária:
+    <!-- end list -->
+    ```sql
+    CREATE TABLE COLHEITAS_CANA (
+        ID_COLHEITA NUMBER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+        DATA_COLHEITA DATE NOT NULL,
+        AREA_HECTARES NUMBER(10, 2) NOT NULL,
+        PRODUCAO_TONELADAS NUMBER(10, 2) NOT NULL,
+        PERDA_PERCENTUAL NUMBER(5, 2) NOT NULL
+    );
+    ```
+2.  **Clone o Repositório:**
+        ` bash     git clone https://github.com/Guibeast/fiap-cap6fase2-gestaocana.git      `
+3.  **Instale as Bibliotecas:**
+        - Navegue até a pasta do projeto e instale as dependências:
+    ```bash
+    pip install oracledb pandas
+    ```
+4.  **Configure as Credenciais:**
+- Abra o arquivo `src/app.py`.
+- Altere as variáveis `DB_USER`, `DB_PASSWORD` e `DB_DSN` com suas credenciais.
 
-CREATE TABLE COLHEITAS_CANA (
-    ID_COLHEITA NUMBER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
-    DATA_COLHEITA DATE NOT NULL,
-    AREA_HECTARES NUMBER(10, 2) NOT NULL,
-    PRODUCAO_TONELADAS NUMBER(10, 2) NOT NULL,
-    PERDA_PERCENTUAL NUMBER(5, 2) NOT NULL
-);
-Passo 2: Configuração do Projeto
-Clone o Repositório:
+5.  **Execute a Aplicação:**
+        - Pelo terminal, na pasta do projeto, execute o comando:
+    ```bash
+    python src/app.py
+    ```
 
-Bash
+## 🗃 Histórico de lançamentos
 
-git clone https://github.com/Guibeast/SEU-REPOSITORIO-PYTHON.git
-Acesse a Pasta do Projeto:
+* 0.2.0 - 13/10/2025
+    * Adicionado código-fonte dos programas opcionais "Ir Além".
+    * Refinamento da documentação e adição do vídeo de demonstração.
+* 0.1.0 - 10/10/2025
+    * Criação da estrutura inicial do projeto e desenvolvimento do código base para o ESP32.
+    * Adição do README.md inicial e imagens do circuito.
 
-Bash
+## 📋 Licença
 
-cd SEU-REPOSITORIO-PYTHON
-Atualize as Credenciais:
-
-Abra o arquivo src/app.py.
-
-Altere as constantes DB_USER, DB_PASSWORD e DB_DSN com as suas credenciais do Oracle.
-
-(Opcional, mas recomendado) Crie um Ambiente Virtual:
-
-Bash
-
-python -m venv venv
-# Ative o ambiente (.\venv\Scripts\activate no Windows ou source venv/bin/activate no Linux/macOS)
-Crie o arquivo requirements.txt na raiz do projeto com o seguinte conteúdo:
-
-Plaintext
-
-oracledb
-pandas
-Instale as Dependências:
-
-Bash
-
-pip install -r requirements.txt
-Passo 3: Execução da Aplicação
-Com tudo configurado, execute o script principal:
-
-Bash
-
-python src/app.py
-O menu interativo aparecerá no seu terminal, permitindo que você utilize o sistema.
-
-🗃 Histórico de lançamentos
-0.1.0 - 15/10/2025
-
-Versão inicial do sistema de gestão de colheitas com CRUD funcional e conexão Oracle.
-
-Criação do README.md detalhado com instruções de setup do banco de dados.
-
-📋 Licença
 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/agodoi/template">MODELO GIT FIAP</a> por <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://fiap.com.br">Fiap</a> está licenciado sobre <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
